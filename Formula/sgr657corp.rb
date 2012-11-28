@@ -1,4 +1,4 @@
-require File.join(File.dirname(__FILE__), 'abstract-sgr-install')
+require File.join(File.dirname(__FILE__), 'abstract-sugar-install')
 
 class Sgr657corp < AbstractSugarInstall
   homepage 'http://support.sugarcrm.com/02_Documentation/01_Sugar_Editions/03_Sugar_Corporate/Sugar_Corporate_6.5/Sugar_Corporate_Release_Notes_6.5.7'
