@@ -39,7 +39,7 @@ brew tap steegi/homebrew-sugar
 
 The brews in this repository assume that MAMP is installed with the defaults as mentioned earlier. They create their own database and subdirectories following the naming scheme of the formula itself.
 
-I.e. if we install SugarCRM community edition 6.5.8 like so
+I.e. When we install SugarCRM community edition 6.5.8 like so
 ```
 brew install steegi/sugar/sgr657ce
 ```
@@ -56,3 +56,11 @@ Example:
 brew install steegi/sugar/sgr657ce --with-demo-data
 ```
 
+### Uninstalling Sugar brews
+Uninstalling Sugar brews is just as simple as installing them.
+```
+brew uninstall steegi/sugar/sgr657ce
+```
+Uninstalling a Sugar brew will remove all the files but not the database. Note though that a new install of the same formula will wipe the database. Hence to start over with a clean slate just simply uninstall and install the formula.
+
+If for any reasons you would only want to remove an instance from the web server but not uninstall it, just use the Homebrew unlink command and link to add it back.
