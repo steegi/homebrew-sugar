@@ -15,6 +15,7 @@ All SugarCRM formulas except those for the community editions (CE) require a con
 
 These brews all depend on a standard, working MAMP installation with the default user name and password in tact.
 If you don't currently have MAMP install, you can download the free or Pro version from here: http://www.mamp.info/en/index.html
+If your MAMP installation is modified, see the Usage section on how to supply a custom config_si.php template.
 
 All brews will install in /usr/local/share and depend on this location being available via http://localhost:8888/share. Hence for the default MAMP install we can achieve this by symbolicly linking /usr/local/share like this in a terminal window:
 
@@ -55,6 +56,53 @@ Example:
 ```
 brew install steegi/sugar/sgr657ce --with-demo-data
 ```
+
+### Using a custom config_si.php template
+If you don't want to use a standard MAMP installation or a different setup all together, you can now supply your own config_si.php template through the SGRBREW_CONFIG_SI_TEMPLATE environment variable. You set it like this in bash or ksh:
+```
+export SGRBREW_CONFIG_SI_TEMPLATE=~/tmp/sgrbrew_config_si_template.php
+```
+There are 3 variables available in the template:
+* instance_name: The name associated with the formula, which is typically used for naming the database
+* app_url: The combined URL based on the default values
+* demo_data: Whether or not the --with-demo-data was specified on the command line.
+
+Example template:
+```php
+<?php
+  $sugar_config_si = array (
+    'setup_db_host_name' => 'localhost',
+    'setup_db_database_name' => '#{instance_name}',
+    'setup_db_drop_tables' => true,
+    'setup_db_create_database' => true,
+    'setup_site_admin_user_name' => 'admin',
+    'setup_site_admin_password' => 'asdf',
+    'setup_db_create_sugarsales_user' => false,
+    'setup_db_admin_user_name' => 'root',
+    'setup_db_admin_password' => 'root',
+    'setup_site_url' => '#{app_url}',
+    'dbUSRData' => 'provide',
+    'setup_db_type' => 'mysql',
+    'setup_system_name' => 'SugarCRM',
+    'default_currency_iso4217' => 'USD',
+    'default_currency_name' => 'US Dollars',
+    'default_currency_significant_digits' => '2',
+    'default_date_format' => 'm/d/Y',
+    'default_time_format' => 'h:ia',
+    'default_decimal_seperator' => '.',
+    'default_export_charset' => 'UTF-8',
+    'default_language' => 'en_us',
+    'default_locale_name_format' => 's f l',
+    'default_number_grouping_seperator' => ',',
+    'export_delimiter' => ',',
+    'demoData' => '#{demo_data}',
+    'setup_site_sugarbeet_anonymous_stats' => '1',
+    'setup_site_sugarbeet_automatic_checks' => '1',
+    'setup_site_specify_guid' => '0',
+    'setup_site_guid' => 'auto',
+    );
+```
+
 
 ### Uninstalling Sugar brews
 Uninstalling Sugar brews is just as simple as installing them.
