@@ -74,41 +74,48 @@ class AbstractSugarInstall < Formula
   end
 
   def config_si_content
-    config = <<-EOS
-    <?php
-      $sugar_config_si = array (
-        'setup_db_host_name' => 'localhost',
-        'setup_db_database_name' => '#{instance_name}',
-        'setup_db_drop_tables' => true,
-        'setup_db_create_database' => true,
-        'setup_site_admin_user_name' => 'admin',
-        'setup_site_admin_password' => 'asdf',
-        'setup_db_create_sugarsales_user' => false,
-        'setup_db_admin_user_name' => 'root',
-        'setup_db_admin_password' => 'root',
-        'setup_site_url' => '#{app_url}',
-        'dbUSRData' => 'provide',
-        'setup_db_type' => 'mysql',
-        'setup_system_name' => 'SugarCRM',
-        'default_currency_iso4217' => 'USD',
-        'default_currency_name' => 'US Dollars',
-        'default_currency_significant_digits' => '2',
-        'default_date_format' => 'm/d/Y',
-        'default_time_format' => 'h:ia',
-        'default_decimal_seperator' => '.',
-        'default_export_charset' => 'UTF-8',
-        'default_language' => 'en_us',
-        'default_locale_name_format' => 's f l',
-        'default_number_grouping_seperator' => ',',
-        'export_delimiter' => ',',
-        'demoData' => '#{demo_data}',
-        'setup_site_sugarbeet_anonymous_stats' => '1',
-        'setup_site_sugarbeet_automatic_checks' => '1',
-        'setup_site_specify_guid' => '0',
-        'setup_site_guid' => 'auto',
-        );
-  EOS
-  config
+
+    if (ENV['SGRBREW_CONFIG_SI_TEMPLATE'] && File.exist?(ENV['SGRBREW_CONFIG_SI_TEMPLATE']))
+      puts 'Reading config_si template from file ' << ENV['SGRBREW_CONFIG_SI_TEMPLATE']
+      config = eval '"' + File.read(ENV['SGRBREW_CONFIG_SI_TEMPLATE']) + '"'
+    else
+      config = <<-EOS
+      <?php
+        $sugar_config_si = array (
+          'setup_db_host_name' => 'localhost',
+          'setup_db_database_name' => '#{instance_name}',
+          'setup_db_drop_tables' => true,
+          'setup_db_create_database' => true,
+          'setup_site_admin_user_name' => 'admin',
+          'setup_site_admin_password' => 'asdf',
+          'setup_db_create_sugarsales_user' => false,
+          'setup_db_admin_user_name' => 'root',
+          'setup_db_admin_password' => 'root',
+          'setup_site_url' => '#{app_url}',
+          'dbUSRData' => 'provide',
+          'setup_db_type' => 'mysql',
+          'setup_system_name' => 'SugarCRM',
+          'default_currency_iso4217' => 'USD',
+          'default_currency_name' => 'US Dollars',
+          'default_currency_significant_digits' => '2',
+          'default_date_format' => 'm/d/Y',
+          'default_time_format' => 'h:ia',
+          'default_decimal_seperator' => '.',
+          'default_export_charset' => 'UTF-8',
+          'default_language' => 'en_us',
+          'default_locale_name_format' => 's f l',
+          'default_number_grouping_seperator' => ',',
+          'export_delimiter' => ',',
+          'demoData' => '#{demo_data}',
+          'setup_site_sugarbeet_anonymous_stats' => '1',
+          'setup_site_sugarbeet_automatic_checks' => '1',
+          'setup_site_specify_guid' => '0',
+          'setup_site_guid' => 'auto',
+          );
+    EOS
+    end
+
+    config
   end
 
 end
