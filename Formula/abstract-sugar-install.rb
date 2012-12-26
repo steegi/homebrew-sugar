@@ -65,7 +65,7 @@ class AbstractSugarInstall < Formula
 
     return <<-EOS.undent
     Sugar installation completed successfully!
-    You can access it by pointing your browser to: #{app_url}
+    You can access it by pointing your browser to: #{Tty.em}#{Tty.white}#{app_url}#{Tty.reset}
     EOS
   end
 
