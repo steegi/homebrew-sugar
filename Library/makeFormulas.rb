@@ -78,8 +78,6 @@ unless ARGV.count == 2 && ['od', 'os'].include?(type)
 	puts "Where version of the format M.m.d"
 	puts "M, m and d are single or double digits and represent Major, minor and dot release indicator"
 else
-	# MakeFormulas.new.testSha1('sdf' , '234')
-	# MakeFormulas.new.makeScript(type, 'Pro', version)
 	MakeFormulas.new.makeScripts(type, version)
 end
 
